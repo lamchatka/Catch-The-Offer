@@ -9,4 +9,4 @@ function renderApp() {
     appElement.append(game);
 }
 renderApp();
-// setSubscriber(renderApp);
+setSubscriber(renderApp);

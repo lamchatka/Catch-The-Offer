@@ -8,12 +8,15 @@ body {
     background-color: #4580c4;
 }
 
+img {
+    width: 50px;
+    /*    почему так сдвигается */
+}
 
 .scoreBlock {
     background-color: #528cde;
     width: 375px;
     height: 48px;
-    margin: auto;
     border-radius: 30px;
     padding: 12px 36px;
     box-shadow: 0 4px 8px 0 rgba(88, 150, 238, 0.3);
@@ -25,6 +28,7 @@ body {
     font-size: 18px;
     line-height: 133%;
     color: #fff;
+    margin: auto auto 24px;
 
 }
 
@@ -43,21 +47,20 @@ body {
 }
 
 .gridElement {
-    width: 279px;
-    height: 276px;
+    width: 296px;
+    height: 290px;
     margin: auto;
-    border-spacing: 12px; /*  Отступ между ячейками, применяется для table, нельзя заменить на margin  */
+    border-collapse: separate;
+    border-spacing: 12px ; /*  Отступ между ячейками, применяется для table, нельзя заменить на margin  */
 
 }
 
 .gridElement td {
-    width: 85px;
+    width: 80px;
     height: 84px;
     border: 2px solid #54bae0;
     border-radius: 5px;
     background: #4580c4;
     text-align: center;
     color: white;
-
-
 }
