@@ -2,7 +2,7 @@ import {data} from "../../../data/data.js";
 import {Row} from "./Row.component/Row.js";
 import {Cell} from "./Cell.component/Cell.js";
 
-export function GameGridComponent() {
+export function GameGrid() {
     const gridElement = document.createElement('table');
     gridElement.className = 'gridElement';
 

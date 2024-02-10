@@ -1,6 +1,6 @@
 import {data} from "../../../data/data.js";
 
-export function ScoreBlockComponent() {
+export function ScoreBlock() {
     const mainElement = document.createElement('div');
     mainElement.className = 'scoreBlock';
 

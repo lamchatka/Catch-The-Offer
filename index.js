@@ -1,4 +1,4 @@
-import {Game} from "./UI/game.component/game.component.js";
+import {Game} from "./UI/Game.component/Game.js";
 import {setSubscriber} from "./data/data.js";
 
 const appElement = document.querySelector('#app');
