@@ -8,9 +8,6 @@ body {
     background-color: #4580c4;
 }
 
-.scoreBlock {
-    font-family: 'Roboto Regular', sans-serif;
-}
 
 .scoreBlock {
     background-color: #528cde;
@@ -20,18 +17,20 @@ body {
     border-radius: 30px;
     padding: 12px 36px;
     box-shadow: 0 4px 8px 0 rgba(88, 150, 238, 0.3);
-    display: flex; /* элементы выстраиваются друг за другом без отступов*/
+    display: flex; /* элементы выстраиваются друг за другом без отступов */
     justify-content: space-between;
+    font-family: 'Roboto Regular', sans-serif;
+    /* стили для текстов внутренних дивов: catchBlockElement и missBlockElement  */
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    color: #fff;
 
 }
 
 .scoreBlock .catchBlockElement {
     width: 102px;
     height: 24px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 133%;
-    color: #fff;
     display: flex;
     justify-content: space-between;
 }
@@ -39,10 +38,6 @@ body {
 .scoreBlock .missBlockElement {
     width: 94px;
     height: 24px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 133%;
-    color: #fff;
     display: flex;
     justify-content: space-between;
 }
