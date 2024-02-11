@@ -1,6 +1,8 @@
 export const data = {
     catchPoints: 0,  // or score
     missPoints: 0,
+    winPoints: 10,
+    isWin: false,
     coordinate_x: getRandomNumber(3),
     coordinate_y: getRandomNumber(3),
     gridColumnsCount: 3,
@@ -45,8 +47,13 @@ startOfferRunInterval()
 
 export function catchOffer() {
     data.catchPoints++;
-    changeOfferCoordinates();
-    startOfferRunInterval();
+    if (data.catchPoints === data.winPoints) {
+        data.isWin = true;
+        clearInterval(offerJumpIntervalId);
+    } else {
+        changeOfferCoordinates();
+        startOfferRunInterval();
+    }
     subscriber();
 }
 
@@ -54,4 +61,15 @@ function missOffer() {
     data.missPoints++;
     changeOfferCoordinates();
     subscriber();
+}
+
+export function restartGame() {
+    data.catchPoints = 0;
+    data.missPoints = 0;
+    data.coordinate_x = getRandomNumber(3);
+    data.coordinate_y = getRandomNumber(3);
+    data.isWin = false;
+    startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
+    subscriber();
+
 }

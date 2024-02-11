@@ -1,12 +1,20 @@
 import {Game} from "./UI/Game.component/Game.js";
-import {setSubscriber} from "./data/data.js";
+import {data, setSubscriber} from "./data/data.js";
+import {Win} from "./UI/Game.component/Win.component/Win.js";
 
 const appElement = document.querySelector('#app');
 
 function renderApp() {
     appElement.innerHTML = '';
-    const game = Game();
-    appElement.append(game);
+    if (data.isWin) {
+        const winElement = Win();
+        appElement.append(winElement);
+    } else {
+        const game = Game();
+        appElement.append(game);
+    }
+
 }
+
 renderApp();
 setSubscriber(renderApp);
