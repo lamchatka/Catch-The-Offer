@@ -1,4 +1,5 @@
 import {data} from "../../../data/data.js";
+import {createElementWithClass} from "../../../helper.js";
 
 export function ScoreBlock() {
     const mainElement = document.createElement('div');
@@ -21,15 +22,12 @@ export function ScoreBlock() {
 function createCatchBlockElement() {
     // создает блок с кол-вом пойманных офферов
 
-    const catchBlockElement = document.createElement('div');
-    catchBlockElement.className = 'catchBlockElement';
+    const catchBlockElement = createElementWithClass('div', 'catchBlockElement');
 
-    const catchElement = document.createElement('div');
-    catchElement.className = 'catchElement';
+    const catchElement = createElementWithClass('div', 'catchElement');
     catchElement.append('Catch:');
 
-    const catchCountElement = document.createElement('div');
-    catchCountElement.className = 'catchCountElement';
+    const catchCountElement = createElementWithClass('div', 'catchCountElement');
     catchCountElement.append(`${data.catchPoints}`);
 
     catchBlockElement.append(
@@ -43,15 +41,12 @@ function createCatchBlockElement() {
 function createMissBlockElement() {
     // создает блок с кол-вом пропущенных офферов
 
-    const missBlockElement = document.createElement('div');
-    missBlockElement.className = 'missBlockElement';
+    const missBlockElement = createElementWithClass('div', 'missBlockElement');
 
-    const missElement = document.createElement('div');
-    missElement.className = 'missElement';
+    const missElement = createElementWithClass('div', 'missElement');
     missElement.append('Miss:');
 
-    const missCountElement = document.createElement('div');
-    missCountElement.className = 'missCountElement';
+    const missCountElement = createElementWithClass('div', 'missCountElement');
     missCountElement.append(`${data.missPoints}`);
 
     missBlockElement.append(
