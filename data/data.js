@@ -1,11 +1,11 @@
 export const data = {
-    catchPoints: 10,  // or score
-    missPoints: 2,
+    catchPoints: 0,  // or score
+    missPoints: 0,
     coordinate_x: getRandomNumber(3),
     coordinate_y: getRandomNumber(3),
     gridColumnsCount: 3,
     gridRowsCount: 3,
-}
+};
 
 function getRandomNumber(n) {
     return Math.floor(Math.random() * n);
@@ -14,12 +14,40 @@ function getRandomNumber(n) {
 let subscriber = null; // подписчик, слушатель, хендлер, обсервер
 
 function changeOfferCoordinates() {
-    data.coordinate_x = getRandomNumber(data.gridColumnsCount);
-    data.coordinate_y = getRandomNumber(data.gridRowsCount);
-    subscriber();
+    let current_coordinate_x;
+    let current_coordinate_y;
+    do {
+        current_coordinate_x = getRandomNumber(data.gridColumnsCount);
+        current_coordinate_y = getRandomNumber(data.gridRowsCount);
+    } while (data.coordinate_x === current_coordinate_x && data.coordinate_y === current_coordinate_y);
+
+    data.coordinate_x = current_coordinate_x;
+    data.coordinate_y = current_coordinate_y;
+
 }
 
 export function setSubscriber(newSubscriber) {
     subscriber = newSubscriber; // устанавливаем нового подписчика
 }
-setInterval(changeOfferCoordinates, 1000);
+
+let offerJumpIntervalId;
+
+function startOfferRunInterval() {
+    clearInterval(offerJumpIntervalId);
+    offerJumpIntervalId = setInterval(missOffer, 2000);
+}
+
+startOfferRunInterval()
+
+export function catchOffer() {
+    data.catchPoints++;
+    changeOfferCoordinates();
+    startOfferRunInterval();
+    subscriber();
+}
+
+function missOffer() {
+    data.missPoints++;
+    changeOfferCoordinates();
+    subscriber();
+}

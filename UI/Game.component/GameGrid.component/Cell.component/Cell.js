@@ -1,4 +1,4 @@
-import {data} from "../../../../data/data.js";
+import {catchOffer, data} from "../../../../data/data.js";
 
 export function Cell(x, y) {
     const cell = document.createElement('td');
@@ -11,5 +11,9 @@ export function Cell(x, y) {
 export function Offer() {
     const offerElement = document.createElement('img');
     offerElement.src = './assets/images/Offer.png';
+
+    offerElement.addEventListener('click', () => {
+        catchOffer();
+    })
     return offerElement;
 }
