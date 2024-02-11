@@ -14,12 +14,16 @@ function getRandomNumber(n) {
 let subscriber = null; // подписчик, слушатель, хендлер, обсервер
 
 function changeOfferCoordinates() {
+
     let current_coordinate_x;
     let current_coordinate_y;
+    let isEqual;
+
     do {
         current_coordinate_x = getRandomNumber(data.gridColumnsCount);
         current_coordinate_y = getRandomNumber(data.gridRowsCount);
-    } while (data.coordinate_x === current_coordinate_x && data.coordinate_y === current_coordinate_y);
+        isEqual = data.coordinate_x === current_coordinate_x && data.coordinate_y === current_coordinate_y;
+    } while (isEqual);
 
     data.coordinate_x = current_coordinate_x;
     data.coordinate_y = current_coordinate_y;
