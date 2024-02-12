@@ -1,13 +1,22 @@
 export const data = {
     catchPoints: 0,  // or score
     missPoints: 0,
-    winPoints: 10,
-    isWin: false,
+    caughtPointsForWin: 10,
+    missedPointsForLose: 2,
     coordinate_x: getRandomNumber(3),
     coordinate_y: getRandomNumber(3),
     gridColumnsCount: 3,
     gridRowsCount: 3,
+    status: null
 };
+
+export const STATUS = {
+    IN_PROGRESS: 'in-progress',
+    PAUSE: 'pause',
+    WIN: 'win',
+    LOSE: 'lose',
+    SETTINGS: 'settings'
+}
 
 function getRandomNumber(n) {
     return Math.floor(Math.random() * n);
@@ -47,8 +56,8 @@ startOfferRunInterval()
 
 export function catchOffer() {
     data.catchPoints++;
-    if (data.catchPoints === data.winPoints) {
-        data.isWin = true;
+    if (data.catchPoints === data.caughtPointsForWin) {
+        data.status = STATUS.WIN;
         clearInterval(offerJumpIntervalId);
     } else {
         changeOfferCoordinates();
@@ -59,7 +68,12 @@ export function catchOffer() {
 
 function missOffer() {
     data.missPoints++;
-    changeOfferCoordinates();
+    if (data.missPoints === data.missedPointsForLose) {
+        data.status = STATUS.LOSE;
+        clearInterval(offerJumpIntervalId);
+    } else {
+        changeOfferCoordinates();
+    }
     subscriber();
 }
 
@@ -68,7 +82,7 @@ export function restartGame() {
     data.missPoints = 0;
     data.coordinate_x = getRandomNumber(3);
     data.coordinate_y = getRandomNumber(3);
-    data.isWin = false;
+    data.status = null;
     startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
     subscriber();
 

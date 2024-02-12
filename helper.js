@@ -8,4 +8,3 @@ export function createElementWithClass(tagName, className) {
     element.className = className;
     return element;
 }
-
