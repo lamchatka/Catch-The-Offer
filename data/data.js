@@ -11,12 +11,12 @@ export const data = {
 };
 
 export const STATUS = {
-    IN_PROGRESS: 'in-progress',
+    IN_PROCESS: 'in-process',
     PAUSE: 'pause',
     WIN: 'win',
     LOSE: 'lose',
     SETTINGS: 'settings'
-}
+};
 
 function getRandomNumber(n) {
     return Math.floor(Math.random() * n);
@@ -26,18 +26,18 @@ let subscriber = null; // подписчик, слушатель, хендлер
 
 function changeOfferCoordinates() {
 
-    let current_coordinate_x;
-    let current_coordinate_y;
+    let new_coordinate_x;
+    let new_coordinate_y;
     let isEqual;
 
     do {
-        current_coordinate_x = getRandomNumber(data.gridColumnsCount);
-        current_coordinate_y = getRandomNumber(data.gridRowsCount);
-        isEqual = data.coordinate_x === current_coordinate_x && data.coordinate_y === current_coordinate_y;
+        new_coordinate_x = getRandomNumber(data.gridColumnsCount);
+        new_coordinate_y = getRandomNumber(data.gridRowsCount);
+        isEqual = data.coordinate_x === new_coordinate_x && data.coordinate_y === new_coordinate_y;
     } while (isEqual);
 
-    data.coordinate_x = current_coordinate_x;
-    data.coordinate_y = current_coordinate_y;
+    data.coordinate_x = new_coordinate_x;
+    data.coordinate_y = new_coordinate_y;
 
 }
 
@@ -52,7 +52,7 @@ function startOfferRunInterval() {
     offerJumpIntervalId = setInterval(missOffer, 2000);
 }
 
-startOfferRunInterval()
+startOfferRunInterval();
 
 export function catchOffer() {
     data.catchPoints++;
@@ -78,12 +78,15 @@ function missOffer() {
 }
 
 export function restartGame() {
-    data.catchPoints = 0;
-    data.missPoints = 0;
+    resetCatchAndMissPoints();
     data.coordinate_x = getRandomNumber(3);
     data.coordinate_y = getRandomNumber(3);
     data.status = null;
     startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
     subscriber();
+}
 
+function resetCatchAndMissPoints() {
+    data.catchPoints = 0;
+    data.missPoints = 0;
 }
