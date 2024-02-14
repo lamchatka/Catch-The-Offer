@@ -3,11 +3,11 @@ export const data = {
     missPoints: 0,
     caughtPointsForWin: 10,
     missedPointsForLose: 2,
-    coordinate_x: getRandomNumber(3),
-    coordinate_y: getRandomNumber(3),
+    offerCoordinateX: getRandomNumber(3),
+    offerCoordinateY: getRandomNumber(3),
     gridColumnsCount: 3,
     gridRowsCount: 3,
-    status: null
+    gameStatus: null
 };
 
 export const STATUS = {
@@ -33,11 +33,11 @@ function changeOfferCoordinates() {
     do {
         new_coordinate_x = getRandomNumber(data.gridColumnsCount);
         new_coordinate_y = getRandomNumber(data.gridRowsCount);
-        isEqual = data.coordinate_x === new_coordinate_x && data.coordinate_y === new_coordinate_y;
+        isEqual = data.offerCoordinateX === new_coordinate_x && data.offerCoordinateY === new_coordinate_y;
     } while (isEqual);
 
-    data.coordinate_x = new_coordinate_x;
-    data.coordinate_y = new_coordinate_y;
+    data.offerCoordinateX = new_coordinate_x;
+    data.offerCoordinateY = new_coordinate_y;
 
 }
 
@@ -57,7 +57,7 @@ startOfferRunInterval();
 export function catchOffer() {
     data.catchPoints++;
     if (data.catchPoints === data.caughtPointsForWin) {
-        data.status = STATUS.WIN;
+        data.gameStatus = STATUS.WIN;
         clearInterval(offerJumpIntervalId);
     } else {
         changeOfferCoordinates();
@@ -69,7 +69,7 @@ export function catchOffer() {
 function missOffer() {
     data.missPoints++;
     if (data.missPoints === data.missedPointsForLose) {
-        data.status = STATUS.LOSE;
+        data.gameStatus = STATUS.LOSE;
         clearInterval(offerJumpIntervalId);
     } else {
         changeOfferCoordinates();
@@ -79,9 +79,9 @@ function missOffer() {
 
 export function restartGame() {
     resetCatchAndMissPoints();
-    data.coordinate_x = getRandomNumber(3);
-    data.coordinate_y = getRandomNumber(3);
-    data.status = null;
+    data.offerCoordinateX = getRandomNumber(3);
+    data.offerCoordinateY = getRandomNumber(3);
+    data.gameStatus = null;
     startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
     subscriber();
 }
@@ -89,4 +89,11 @@ export function restartGame() {
 function resetCatchAndMissPoints() {
     data.catchPoints = 0;
     data.missPoints = 0;
+}
+
+export function getOfferPositionCoordinates() {
+    return {
+        offerCoordinateX: data.offerCoordinateX,
+        offerCoordinateY: data.offerCoordinateY,
+    }
 }

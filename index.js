@@ -7,17 +7,20 @@ const appElement = document.querySelector('#app');
 
 function renderApp() {
     appElement.innerHTML = '';
-    if (data.status === STATUS.WIN) {
+    if (data.gameStatus === STATUS.WIN) {
         const winElement = Win();
+        console.log('WIN');
         appElement.append(winElement);
-    } else if (data.status === STATUS.LOSE) {
+    } else if (data.gameStatus === STATUS.LOSE) {
         const loseElement = Lose();
+        console.log('LOSE');
         appElement.append(loseElement)
     } else {
         const game = Game();
+        console.log('GAME');
         appElement.append(game);
     }
 }
 
 renderApp();
-setSubscriber(renderApp);
+setSubscriber(renderApp); // всего один подписчик (renderApp)
