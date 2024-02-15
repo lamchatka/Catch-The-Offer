@@ -8,11 +8,6 @@ body {
     background-color: #4580c4;
 }
 
-img {
-    width: 50px;
-    /*    почему так сдвигается */
-}
-
 .scoreBlock {
     background-color: #528cde;
     width: 375px;

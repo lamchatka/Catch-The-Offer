@@ -5,54 +5,40 @@ export function ScoreBlock() {
     const mainElement = document.createElement('div');
     mainElement.className = 'scoreBlock';
 
-    // div для количества пойманных офферов
-    const catchBlockElement = createCatchBlockElement();
-
-    // div для количества пропущенных офферов
-    const missBlockElement = createMissBlockElement();
-
     mainElement.append(
-        catchBlockElement,
-        missBlockElement,
+        CatchBlockElement(),
+        MissBlockElement(),
     );
 
     return mainElement;
 }
 
-function createCatchBlockElement() {
+function CatchBlockElement() {
     // создает блок с кол-вом пойманных офферов
 
-    const catchBlockElement = createElementWithClass('div', 'catchBlockElement');
-
-    const catchElement = createElementWithClass('div', 'catchElement');
-    catchElement.append('Catch:');
-
-    const catchCountElement = createElementWithClass('div', 'catchCountElement');
-    catchCountElement.append(`${data.catchPoints}`);
-
-    catchBlockElement.append(
-        catchElement,
-        catchCountElement
-    );
-
-    return catchBlockElement;
+    return ItemBlockElement('div', 'catch', data.catchPoints, 'Catch:');
 }
 
-function createMissBlockElement() {
+function MissBlockElement() {
     // создает блок с кол-вом пропущенных офферов
 
-    const missBlockElement = createElementWithClass('div', 'missBlockElement');
+    return ItemBlockElement('div', 'miss', data.missPoints, 'Miss:');
+}
 
-    const missElement = createElementWithClass('div', 'missElement');
-    missElement.append('Miss:');
+function ItemBlockElement(tagName, elementName, points, message) {
+    // шаблон для блоков
 
-    const missCountElement = createElementWithClass('div', 'missCountElement');
-    missCountElement.append(`${data.missPoints}`);
+    const itemBlockElement = createElementWithClass(tagName, elementName + 'BlockElement');
 
-    missBlockElement.append(
-        missElement,
-        missCountElement
+    const itemElement = createElementWithClass(tagName, elementName + 'Element');
+    itemElement.append(message);
+
+    const itemCountElement = createElementWithClass(tagName, elementName + 'CountElement');
+    itemCountElement.append(`${points}`);
+
+    itemBlockElement.append(
+        itemElement,
+        itemCountElement
     );
-
-    return missBlockElement;
+    return itemBlockElement;
 }
