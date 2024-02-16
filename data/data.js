@@ -16,7 +16,7 @@ export const data = {
     catchPoints: 0,  // or score
     missPoints: 0,
     caughtPointsForWin: 10,
-    missedPointsForLose: 2,
+    missedPointsForLose: 10,
     coordinates: {
         current: {
             offerCoordinateX: getRandomNumber(3),
@@ -37,7 +37,17 @@ function getRandomNumber(n) {
     return Math.floor(Math.random() * n);
 }
 
-let subscriber = null; // подписчик, слушатель, хендлер, обсервер
+let subscribers = []; // подписчик, слушатель, хендлер, обсервер
+
+function notify() {
+    subscribers.forEach( subscriber => subscriber() );
+}
+
+export function subscribe(newSubscriber) {
+    subscribers.push(newSubscriber); // добавляем нового подписчика
+    console.log(subscribers);
+
+}
 
 function changeOfferCoordinates() {
 
@@ -53,11 +63,7 @@ function changeOfferCoordinates() {
 
     data.coordinates.current.offerCoordinateX = new_coordinate_x;
     data.coordinates.current.offerCoordinateY = new_coordinate_y;
-    
-}
 
-export function setSubscriber(newSubscriber) {
-    subscriber = newSubscriber; // устанавливаем нового подписчика
 }
 
 let offerJumpIntervalId;
@@ -73,31 +79,49 @@ export function catchOffer() {
     data.catchPoints++;
     data.offerStatus = OFFER_STATUSES.CAUGHT
     data.coordinates.previous = {...data.coordinates.current}
-    if (data.catchPoints === data.caughtPointsForWin) {
-        data.gameStatus = GAME_STATUSES.WIN;
-        clearInterval(offerJumpIntervalId);
-    } else {
-        changeOfferCoordinates();
-        startOfferRunInterval();
-    }
-    data.offerStatus = OFFER_STATUSES.DEFAULT
-    subscriber();
+    setInterval(() =>{
+        data.offerStatus = OFFER_STATUSES.DEFAULT;
+        notify();
+    }, 200)
 
+    // changeOfferCoordinates();
+    // notify();
+    // startOfferRunInterval();
+
+
+    // if (data.catchPoints === data.caughtPointsForWin) {
+    //     data.gameStatus = GAME_STATUSES.WIN;
+    //     clearInterval(offerJumpIntervalId);
+    // } else {
+    //     changeOfferCoordinates();
+    //     startOfferRunInterval();
+    // }
 }
 
 function missOffer() {
     data.missPoints++;
     data.offerStatus = OFFER_STATUSES.MISSED
     data.coordinates.previous = {...data.coordinates.current}
-    if (data.missPoints === data.missedPointsForLose) {
-        data.gameStatus = GAME_STATUSES.LOSE;
-        clearInterval(offerJumpIntervalId);
-    } else {
+        setInterval(() =>{
+            data.offerStatus = OFFER_STATUSES.DEFAULT;
+            notify();
+        }, 200);
 
-        changeOfferCoordinates();
-    }
-    data.offerStatus = OFFER_STATUSES.DEFAULT
-    subscriber();
+    // changeOfferCoordinates();
+    // notify();
+    // startOfferRunInterval();
+
+    // if (data.missPoints === data.missedPointsForLose) {
+    //     data.gameStatus = GAME_STATUSES.LOSE;
+    //     clearInterval(offerJumpIntervalId);
+    // } else {
+    //     changeOfferCoordinates();
+    //     console.log(data.coordinates.current);
+    //     setInterval(() =>{
+    //         data.offerStatus = OFFER_STATUSES.DEFAULT;
+    //         notify();
+    //     }, 200)
+    // }
 
 }
 
@@ -107,7 +131,7 @@ export function restartGame() {
     data.offerCoordinateY = getRandomNumber(3);
     data.gameStatus = null;
     startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
-    subscriber();
+    notify();
 }
 
 function resetCatchAndMissPoints() {
@@ -115,11 +139,12 @@ function resetCatchAndMissPoints() {
     data.missPoints = 0;
 }
 
-
 export function getOfferPositionCoordinates() {
     return {
         offerCoordinateX: data.offerCoordinateX,
         offerCoordinateY: data.offerCoordinateY,
     }
 }
+
+
 
