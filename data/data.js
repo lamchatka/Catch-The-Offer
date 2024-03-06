@@ -16,7 +16,7 @@ export const data = {
     catchPoints: 0,  // or score
     missPoints: 0,
     caughtPointsForWin: 10,
-    missedPointsForLose: 10,
+    missedPointsForLose: 5,
     coordinates: {
         current: {
             offerCoordinateX: getRandomNumber(3),
@@ -40,7 +40,7 @@ function getRandomNumber(n) {
 let subscribers = []; // подписчик, слушатель, хендлер, обсервер
 
 function notify() {
-    subscribers.forEach( subscriber => subscriber() );
+    subscribers.forEach(subscriber => subscriber());
 }
 
 export function subscribe(newSubscriber) {
@@ -79,7 +79,7 @@ export function catchOffer() {
     data.catchPoints++;
     data.offerStatus = OFFER_STATUSES.CAUGHT
     data.coordinates.previous = {...data.coordinates.current}
-    setInterval(() =>{
+    setTimeout(() => {
         data.offerStatus = OFFER_STATUSES.DEFAULT;
         notify();
     }, 200)
@@ -102,14 +102,20 @@ function missOffer() {
     data.missPoints++;
     data.offerStatus = OFFER_STATUSES.MISSED
     data.coordinates.previous = {...data.coordinates.current}
-        setInterval(() =>{
+
+    if (data.missPoints === data.missedPointsForLose) {
+        data.gameStatus = GAME_STATUSES.LOSE;
+        clearInterval(offerJumpIntervalId);
+        data.offerStatus = OFFER_STATUSES.DEFAULT;
+    } else {
+        setTimeout(() => {
             data.offerStatus = OFFER_STATUSES.DEFAULT;
             notify();
         }, 200);
+    }
+    changeOfferCoordinates();
+    notify();
 
-    // changeOfferCoordinates();
-    // notify();
-    // startOfferRunInterval();
 
     // if (data.missPoints === data.missedPointsForLose) {
     //     data.gameStatus = GAME_STATUSES.LOSE;
@@ -127,8 +133,8 @@ function missOffer() {
 
 export function restartGame() {
     resetCatchAndMissPoints();
-    data.offerCoordinateX = getRandomNumber(3);
-    data.offerCoordinateY = getRandomNumber(3);
+    data.coordinates.current.offerCoordinateX = getRandomNumber(3);
+    data.coordinates.current.offerCoordinateY = getRandomNumber(3);
     data.gameStatus = null;
     startOfferRunInterval() // не пойму, почему если поменять строки местами, то все также будет работать
     notify();
